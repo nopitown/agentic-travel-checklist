@@ -1,0 +1,27 @@
+pre-commit:
+  parallel: true
+  commands:
+    eslint:
+      skip:
+        - merge
+      glob: "*.{js,ts,tsx,mjs,css}"
+      run: npx eslint --fix {staged_files}
+
+    stylelint:
+      skip:
+        - merge
+      glob: "*.{css}"
+      run: npx stylelint --fix {staged_files}
+
+    type-check:
+      skip:
+        - merge
+      glob: "*.{ts,tsx}"
+      run: npm run type-check
+
+pre-push:
+  parallel: true
+  commands:
+    test:
+      glob: "*.{js,ts,tsx}"
+      run: npx jest --findRelatedTests --silent --passWithNoTests {push_files}
